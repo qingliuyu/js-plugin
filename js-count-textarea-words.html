@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>js检测多行文本框输入字数</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index,follow" />
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	-->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+	function showMsg(){
+		var max = 100,
+			content = document.getElementById("txtContent").value.replace(/^\s+|\s+$/g,"");
+			msgDom = document.getElementById("msg"),
+			//剩余字数
+			restChars = max - content.length;
+		if(restChars >= 0)
+			msgDom.innerHTML = "你还可以输入<b>" + restChars + "</b>字";
+		else
+			msgDom.innerHTML = "已经超过<b style='color: #DA0000;'>" + Math.abs(restChars) + "</b>字";
+	}
+	// 能够解决用户粘贴内容到文本框内的情形
+	function bindEvt(){
+		var contentDom = document.getElementById("txtContent");
+		// firefox、chrome
+		if(window.addEventListener) {
+			contentDom.addEventListener("input",showMsg,false);
+		}
+		// IE
+		else if(window.attachEvent) {
+			contentDom.attachEvent("onpropertychange",showMsg);
+		}
+	}
+	// html元素响应的事件，事件名全是小写
+	window.onload = bindEvt;
+	</script>
+</head>
+
+<body>
+<textarea id="txtContent" style="width: 600px; height: 100px; "></textarea>
+<br />
+<p id="msg">你还可以输入<b>100</b>字</p>
+
+</body>
+</html>

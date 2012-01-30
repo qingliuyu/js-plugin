@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>励志语句淡入淡出</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index,follow" />
+	<style type="text/css">
+	*{ padding: 0; margin: 0;}
+	div{ height: 20px; overflow: hidden;}
+	ul{ list-style: none; }
+	ul li{ height: 20px; background-color: #3cc; border-bottom: 1px solid #f00; display: none; }
+	</style>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+	<div>
+		<ul>
+			<li>sun</li>
+			<li>moon</li>
+			<li>star</li>
+		</ul>
+	</div>	
+	<script type="text/javascript">
+	var Slider = {
+		Config: {
+			// 动画淡去时间
+			fadeDuration: 1000,
+			// 文字显示时间
+			showDuration: 3000,
+		},
+		currentItem: -1,
+		_show: function(){
+			var length = $("li").length,
+				$item = $("li").eq(Slider.currentItem);
+			$item.fadeOut( Slider.Config.fadeDuration, function(){
+				Slider.currentItem = (Slider.currentItem >= 2) ? 0 : (Slider.currentItem + 1);
+				$item = $("li").eq(Slider.currentItem);
+				$item.css("display","none");
+				$item.fadeIn( Slider.Config.fadeDuration, function(){
+					setTimeout( Slider._show, Slider.Config.showDuration );	
+				});				
+			});
+		},
+		init: function(){
+			Slider._show();
+		}
+	}
+	Slider.init();
+	</script>
+</body>
+</html>

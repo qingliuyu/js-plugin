@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>js检测多行文本框输入字数</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index,follow" />
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	-->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+	function bindEvt(){
+		var cbAllChecked = document.getElementById("cbAllChecked"),
+			cbItemList = document.getElementsByName("cbItem"),
+			count = 0;
+		cbAllChecked.onclick = function(){
+			for(var i = 0; i < cbItemList.length; i++){
+				cbItemList[i].checked = this.checked ? true : false;
+			}
+		}
+		for(var i = 0; i < cbItemList.length; i++) {
+			cbItemList[i].onclick = function(){
+				this.checked ? count++ : count--;
+				cbAllChecked.checked = (count == cbItemList.length) ? true : false;
+			}
+		}
+	}
+	window.onload = bindEvt;
+	</script>
+</head>
+
+<body>
+<h3>
+	<input id="cbAllChecked" name="cbAllChecked" type="checkbox" />
+	<label for="cbAllChecked">全选</label>
+</h3>
+<table>
+	<tr>
+		<td><input name="cbItem" type="checkbox"/></td>
+		<td>sun</td>
+	</tr>
+	<tr>
+		<td><input name="cbItem" type="checkbox"/></td>
+		<td>moon</td>
+	</tr>
+	<tr>
+		<td><input name="cbItem" type="checkbox"/></td>
+		<td>star</td>
+	</tr>
+</table>
+</body>
+</html>
