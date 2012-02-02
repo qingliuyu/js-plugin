@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
-	<div>
+	<div id="saying">
 		<ul>
 			<li>sun</li>
 			<li>moon</li>
@@ -23,31 +23,36 @@
 		</ul>
 	</div>	
 	<script type="text/javascript">
-	var Slider = {
-		Config: {
-			// 动画淡去时间
-			fadeDuration: 1000,
-			// 文字显示时间
-			showDuration: 3000,
-		},
-		currentItem: -1,
-		_show: function(){
-			var length = $("li").length,
-				$item = $("li").eq(Slider.currentItem);
-			$item.fadeOut( Slider.Config.fadeDuration, function(){
-				Slider.currentItem = (Slider.currentItem >= 2) ? 0 : (Slider.currentItem + 1);
-				$item = $("li").eq(Slider.currentItem);
-				$item.css("display","none");
-				$item.fadeIn( Slider.Config.fadeDuration, function(){
-					setTimeout( Slider._show, Slider.Config.showDuration );	
-				});				
-			});
-		},
-		init: function(){
-			Slider._show();
-		}
-	}
-	Slider.init();
-	</script>
+    var Slider = function(el){
+        this.wrapper = $("#" + el);
+        this.currentItem = -1;
+        this.Config = {
+            fadeDuration: 1000,
+            showDuration: 3000
+        };
+    };
+    Slider.prototype = {
+        slider: this,
+        show: function(){
+            var that = this,
+                $list = that.wrapper.find("li"),
+                length = $list.length,
+                $item = $list.eq(that.currentItem);
+            $item.fadeOut(that.Config.fadeDuration, function(){
+                that.currentItem = (that.currentItem >= (length - 1)) ? 0 : (that.currentItem + 1);
+                $item = $list.eq(that.currentItem).css("display","none");
+                $item.fadeIn(that.Config.showDuration, function(){
+					// setTimeout(that.show, that.Config.showDuration);
+					// 第一次执行 this -> slider ,第二次执行就指向 DOMWindow
+                    setTimeout(function(){
+							that.show();
+					}, that.Config.showDuration );
+                });
+            });
+        }
+    };
+    var slider = new Slider("saying");
+    slider.show();
+    </script>
 </body>
 </html>
